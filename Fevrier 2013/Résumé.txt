@@ -1,0 +1,20 @@
+Notre projet consiste à transformer un algorithme de partitionnement d'observations, qui utilise 
+directement la méthode des K-moyenne, en un algorithme multi-niveau qui construit une succession
+de problèmes comptant moins d'observations afin d'optimiser les temps de calculs et de minimiser 
+la fonction critère.
+
+Pour ceci notre étude est basée sur un pré-traitement des données en construisant les sous problèmes
+les uns apres les autres grâce à la fusion des observations suivant une distance prédéfinie. Cette 
+phase d'agrégation est suivit de l'application sur chaque sous problème, plus simple et doté du partionnement 
+trouvé a la phase précédente, d'un nouveau partionnement,relativement proche du précédent, 
+donné par l'algorithme des K-moyennes.
+
+Notre étude théorique nous montre que l'algorithme des K-moyennes est plus rapide sur des problèmes
+avec peu d'observation, et nous chercherons dans cette étude à confirmer cette théorie et a ameliorer
+l'algorithme simple en appliquant ce principe de multi-niveau.
+
+En ce jour, les résultats montré par nos essais ont confirmé qu'on accélère le partionnement de données
+à chaque étape de sous problème, mais lorsqu'on observe globalement le problème, on est encore derrière
+nos espérance. C'est pourquoi, nous axons notre projet sur une étude d'optimisation des paramètres modifiables
+dans nos algorithmes (Par exemple, le nombre de sous problème, le nombre minimum d'observation pour le problème
+le plus petit...).

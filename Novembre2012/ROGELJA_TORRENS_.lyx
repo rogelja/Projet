@@ -1,0 +1,1386 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\begin_preamble
+\usepackage[algoruled]{algorithm2e}
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2.5cm
+\rightmargin 2.5cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Premier rapport
+\end_layout
+
+\begin_layout Section
+Définition du problème de partionnement
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{0.5cm}
+\end_layout
+
+\end_inset
+
+Soit 
+\begin_inset Formula $G_{0}$
+\end_inset
+
+ = (
+\begin_inset Formula $\mathbb{\mathcal{V}}_{0},\mathcal{E}_{0}$
+\end_inset
+
+,
+\begin_inset Formula $\mathit{A_{0}}$
+\end_inset
+
+) un graphe, où 
+\series bold
+
+\begin_inset Formula $\mathbb{\mathcal{V}}_{0},\mathcal{\: E}_{0}$
+\end_inset
+
+ 
+\series default
+et
+\series bold
+ 
+\begin_inset Formula $\mathit{A_{0}}$
+\end_inset
+
+ 
+\series default
+sont respectivement les ensembles de sommets, d'arêtes et enfin des poids
+ associés à chaque arête.
+ Le partionnement du graphe 
+\begin_inset Formula $G_{0}$
+\end_inset
+
+ est un procédé qui vise à partitionner l'ensemble
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\mathbb{\mathcal{V}}_{0}$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ de ses points en 
+\begin_inset Formula $K$
+\end_inset
+
+ parties distinctes 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $(\pi_{k})_{1\leq k\leq K}$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+, de sorte à optimiser une fonction objectif tout en respectant des contraintes
+ données.
+\end_layout
+
+\begin_layout Standard
+Une partition satisfait :
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray*}
+\pi_{k} & \subseteq & \mathbb{\mathcal{V}}_{k}\\
+\bigcup_{k=1}^{K}\pi_{k} & = & \mathbb{\mathcal{V}}_{k}\\
+\pi_{k} & \cap & \pi_{k'}=\emptyset\;\;\;\;\;\;\forall k\neq k^{'}
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Pour chaque sous ensemble 
+\begin_inset Formula $\pi_{k}$
+\end_inset
+
+, nous notons 
+\begin_inset Formula $\mu_{k}$
+\end_inset
+
+son centre :
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray*}
+\mu_{k} & = & \frac{1}{|\pi_{k}|}\sum_{i\epsilon\pi_{k}}X_{i}
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Le problème des k-moyennes consiste à determiner une partition minimisant
+ la somme des carrées des distances entre chaque point et le centre de sous-ense
+mble auquel il est affecté.
+ C'est a à dire :
+\begin_inset Formula 
+\[
+min{\displaystyle \sum_{i=1}^{n}}\parallel X_{i}-\mu_{i}\parallel^{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Dans notre cas, on travaille avec des objectifs séparables, donc on peut
+ réécrire la fonction objectif comme :
+\begin_inset Formula 
+\begin{eqnarray*}
+\underset{\pi}{arg\: min} & {\displaystyle \sum_{i=1}^{n}\sum_{X_{j}\epsilon\pi_{i}}} & \parallel X_{j}-\mu_{i}\parallel^{2}
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+L'algorithme multi-niveaux
+\end_layout
+
+\begin_layout Subsection
+Réduction du graphe
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{0.5cm}
+\end_layout
+
+\end_inset
+
+La première étape de l'algorithme consiste à réduire la taille du graphe
+ de départ en fusionnant des sommets en 
+\begin_inset Quotes eld
+\end_inset
+
+supersommets
+\begin_inset Quotes erd
+\end_inset
+
+ via différentes méthodes de combinaison.
+\end_layout
+
+\begin_layout Standard
+On utilise ici l'algorithme suivant pour construire 
+\begin_inset Formula $G_{i}$
+\end_inset
+
+ à partir de 
+\begin_inset Formula $G_{i+1}$
+\end_inset
+
+ :
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+PourCh{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $x\in G_{i}$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $marque\left(x\right)=faux$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption{Initialisation avant la réduction}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout --Separator--
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Appeler 
+\begin_inset Formula $algorithm1()$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+PourCh{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $x\in G_{i}$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+eSi{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\forall y\in voisins\left(x\right),marque\left(y\right)=vrai$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{eqnarray*}
+marque(x) & = & vrai\\
+G_{i} & = & G_{i}\smallsetminus x
+\end{eqnarray*}
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+trouver 
+\begin_inset Formula $y$
+\end_inset
+
+ qui maximise 
+\begin_inset Formula $\frac{e(x,y)}{w(x)}+\frac{e(x,y)}{w(y)}$
+\end_inset
+
+ , avec 
+\begin_inset Formula $w(i)$
+\end_inset
+
+ le poids associé au sommet 
+\begin_inset Formula $i$
+\end_inset
+
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+fusionner 
+\begin_inset Formula $x$
+\end_inset
+
+ et 
+\begin_inset Formula $y$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray*}
+marque(x) & = & \mbox{\ensuremath{vrai}}\\
+marque(y) & = & vrai\\
+G_{i} & = & G_{i}\smallsetminus x\\
+G_{i} & = & G_{i}\smallsetminus y
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption{Phase de réduction}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+newpage
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Phase de partitionnement initial
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{0.5cm}
+\end_layout
+
+\end_inset
+
+On arrête la réduction du graphe lorsque celui-ci compte moins que 
+\begin_inset Formula $20k$
+\end_inset
+
+ sommets, où 
+\begin_inset Formula $k$
+\end_inset
+
+ est le nombre de parties désiré.
+ On peut alors obtenir un partitionnement initial de 
+\begin_inset Formula $G_{0}$
+\end_inset
+
+ en partitionnant 
+\begin_inset Formula $G_{m}$
+\end_inset
+
+, le plus petit graphe obtenu après la réduction.
+\end_layout
+
+\begin_layout Standard
+Pour ce faire on utilise l'algorithme spectral de Yu et Shi généralisé avec
+ des pondérations arbitraires.
+\end_layout
+
+\begin_layout Subsection
+Phase de raffinement
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{0.5cm}
+\end_layout
+
+\end_inset
+
+Ce premier partitionnement ayant été obtenu, on peut le raffiner en parcourant
+ les graphes 
+\begin_inset Formula $G_{m-1}$
+\end_inset
+
+ ,..., 
+\begin_inset Formula $G_{0}$
+\end_inset
+
+ de la manière suivante:si un 
+\begin_inset Quotes eld
+\end_inset
+
+supersommet
+\begin_inset Quotes erd
+\end_inset
+
+ de 
+\begin_inset Formula $G_{i}$
+\end_inset
+
+ est dans une partition 
+\begin_inset Formula $c$
+\end_inset
+
+, alors tous les sommets de 
+\begin_inset Formula $G_{i-1}$
+\end_inset
+
+qui le composent sont également dans 
+\begin_inset Formula $c$
+\end_inset
+
+, ce qui mène à un partitionnement initial pour le graphe 
+\begin_inset Formula $G_{i-1}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Il faut ensuite raffiner ce partitionnement pour 
+\begin_inset Formula $G_{i-1}$
+\end_inset
+
+.
+ Pour ce faire, on définit un partitionnement initial 
+\begin_inset Formula $\pi$
+\end_inset
+
+
+\begin_inset Formula $_{c}^{(0)}$
+\end_inset
+
+ une matrice noyau 
+\begin_inset Formula $K$
+\end_inset
+
+ selon la fonction objectif du partitionnement et on utilise l'algorithme
+ suivant :
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+PourCh{
+\end_layout
+
+\end_inset
+
+chaque ligne 
+\begin_inset Formula $i$
+\end_inset
+
+ de 
+\begin_inset Formula $K$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $d(i,\boldsymbol{m}_{c})=K_{ii}-\frac{2\sum_{j\in\pi_{c}(t)}\cdot poids(j)\cdot K_{ij}}{\sum_{j\in\pi_{c}(t)}\cdot poids(j)}+\frac{\sum_{j,l\in\pi_{c}(t)}\cdot poids(j)\cdot poids(l)\cdot K_{jl}}{(\sum_{j\in\pi_{c}(t)}\cdot poids(j))^{2}}$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption{Initialisation avant le raffinement}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{
+\backslash
+fill}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Appeler 
+\begin_inset Formula $algorithm3()$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Trouver 
+\begin_inset Formula $c{}^{*}(i)=argmin_{c}d(i,\boldsymbol{m}_{c})$
+\end_inset
+
+ (on s'occupe des égalités de façon arbitraire)
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{
+\backslash
+fill}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Tq{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $((\neg$
+\end_inset
+
+ convergence
+\begin_inset Formula $)$
+\end_inset
+
+ et 
+\begin_inset Formula $($
+\end_inset
+
+seuil d'itérations pas dépassé
+\begin_inset Formula $))$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Mettre à jour les partitions : 
+\begin_inset Formula 
+\begin{eqnarray*}
+\pi_{c}^{(t+1)} & = & \{i\::\: c^{*}(i)=c\}\\
+t & = & t+1
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption{Phase de raffinement}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+newpage
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Algorithme de principe
+\end_layout
+
+\begin_layout Standard
+Notre algorithme général peut se décomposer en trois phases: 
+\end_layout
+
+\begin_layout Itemize
+Le première phase 
+\begin_inset Quotes eld
+\end_inset
+
+d'agrégagtion
+\begin_inset Quotes erd
+\end_inset
+
+ qui va utiliser le premier algorithme précédent 
+\begin_inset Formula $(1\:\&\:2)$
+\end_inset
+
+ afin de reduire et d'obtenir un graphe avec 
+\begin_inset Formula $K$
+\end_inset
+
+ 
+\begin_inset Quotes eld
+\end_inset
+
+supersommets
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Une phase de 
+\begin_inset Quotes eld
+\end_inset
+
+partitionnement
+\begin_inset Quotes erd
+\end_inset
+
+ qui va nous façonner notre premiere et grossière partition décrite au point
+ 
+\begin_inset Formula $2.2$
+\end_inset
+
+ .
+ 
+\end_layout
+
+\begin_layout Itemize
+Puis vient la phase de 
+\begin_inset Quotes eld
+\end_inset
+
+raffinement
+\begin_inset Quotes erd
+\end_inset
+
+ qui, par le biais de l'algorithme 
+\begin_inset Formula $(3\:\&\:4)$
+\end_inset
+
+, permet de raffiner la grossière partition afin de tirer le meilleur regroupeme
+nt possible.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Input:
+\series default
+ 
+\begin_inset Formula $k$
+\end_inset
+
+ : nombre de partition que l'on désire , 
+\begin_inset Formula $G_{0}$
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ : Graphe initial , 
+\begin_inset Formula $t_{max}$
+\end_inset
+
+: nombre maximum d'itération
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Output: 
+\series default
+
+\begin_inset Formula $\{\pi_{c}\}_{c=1}^{k}$
+\end_inset
+
+: partitionnement final de notre graphe
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $compteur=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Tq{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $|\mathbb{\mathcal{V}}_{compteur}|<20k$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray*}
+G_{compteur+1} & = & algorithm2(G_{compteur})\\
+compteur & = & compteur+1
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\begin_inset Formula $\{\pi_{c}\}_{c=1}^{k}=$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+Partitionnement primaire par l'algorithme de Yu and Shi.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Pour{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $i$
+\end_inset
+
+ de 
+\begin_inset Formula $compteur$
+\end_inset
+
+jusqu'à 1 avec 
+\begin_inset Formula $pas=-1$
+\end_inset
+
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{eqnarray*}
+Appliquer & \{\pi_{c}\}_{c=1}^{k} & à\: G_{compteur-1}\\
+\{\pi_{c}\}_{c=1}^{k} & = & algorithm4(K,k,\omega,t_{max},\{\pi_{c}\}_{c=1}^{k})
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption{Algorithme général de partitionnement
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $(G_{0}=(\mathbb{\mathcal{V}}_{0},\mathcal{E}_{0},\mathit{A_{0}}),\{\pi_{c}\}_{c=1}^{k},t_{max})$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+)}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

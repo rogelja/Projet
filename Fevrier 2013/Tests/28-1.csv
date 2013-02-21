@@ -1,0 +1,32 @@
+_________________________________________________________
+Niveau de départ : 0
+Nombre moyen d'itérations :1
+Temps moyen des k-moyennes :9.4e-05
+Temps total des k-moyennes :0.000376
+Coût moyen :839.857
+Coût final :690.17
+_________________________________________________________
+_________________________________________________________
+Niveau de départ : 1
+Nombre moyen d'itérations :1
+Temps moyen des k-moyennes :0.000467333
+Temps total des k-moyennes :0.001402
+Coût moyen :751.261
+Coût final :690.17
+_________________________________________________________
+_________________________________________________________
+Niveau de départ : 2
+Nombre moyen d'itérations :1
+Temps moyen des k-moyennes :0.0001495
+Temps total des k-moyennes :0.000299
+Coût moyen :716.085
+Coût final :690.17
+_________________________________________________________
+_________________________________________________________
+Niveau de départ : 3
+Nombre moyen d'itérations :1
+Temps moyen des k-moyennes :0.0002
+Temps total des k-moyennes :0.0002
+Coût moyen :690.17
+Coût final :690.17
+_________________________________________________________
