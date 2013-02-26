@@ -107,7 +107,7 @@ status open
 
 
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -146,7 +146,7 @@ A
 \series default
 pplications 
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -189,24 +189,20 @@ height_special "totalheight"
 status open
 
 \begin_layout Plain Layout
-Logo de l'entreprise ?
+ 
 \begin_inset ERT
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
-%
+
 \backslash
 flushright
 \end_layout
 
 \end_inset
 
-
-\begin_inset Newline newline
-\end_inset
-
- 
+ Logo de l'entreprise
 \begin_inset ERT
 status collapsed
 
@@ -221,7 +217,11 @@ status collapsed
 
 \end_inset
 
- nom de l'entreprise 
+ Nom 
+\begin_inset Newline newline
+\end_inset
+
+ de l'entreprise 
 \begin_inset ERT
 status collapsed
 
@@ -242,14 +242,14 @@ Adresse
 \begin_inset Newline newline
 \end_inset
 
- de l'entreprise ?
+ de l'entreprise
 \end_layout
 
 \end_inset
 
 
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -257,7 +257,7 @@ status collapsed
 \backslash
 
 \backslash
-[6em]
+[8em]
 \end_layout
 
 \end_inset
@@ -291,7 +291,7 @@ Rapport d'ingénieur
 
  Filière F4 : Calcul Scientifique et Modélisation 
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -299,7 +299,7 @@ status collapsed
 \backslash
 
 \backslash
-[2em]
+[3em]
 \end_layout
 
 \end_inset
@@ -328,7 +328,7 @@ status collapsed
 
  
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -336,7 +336,7 @@ status collapsed
 \backslash
 
 \backslash
-[10em]
+[11em]
 \end_layout
 
 \end_inset
@@ -378,7 +378,7 @@ Durée : 120 heures
 
 \size normal
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -448,7 +448,7 @@ status open
 
 
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -487,7 +487,7 @@ A
 \series default
 pplications 
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -530,24 +530,20 @@ height_special "totalheight"
 status open
 
 \begin_layout Plain Layout
-Logo de l'entreprise ?
+ 
 \begin_inset ERT
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
-%
+
 \backslash
 flushright
 \end_layout
 
 \end_inset
 
-
-\begin_inset Newline newline
-\end_inset
-
- 
+ Logo de l'entreprise
 \begin_inset ERT
 status collapsed
 
@@ -562,7 +558,11 @@ status collapsed
 
 \end_inset
 
- nom de l'entreprise 
+ Nom 
+\begin_inset Newline newline
+\end_inset
+
+ de l'entreprise 
 \begin_inset ERT
 status collapsed
 
@@ -583,14 +583,14 @@ Adresse
 \begin_inset Newline newline
 \end_inset
 
- de l'entreprise ?
+ de l'entreprise
 \end_layout
 
 \end_inset
 
 
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -598,7 +598,7 @@ status collapsed
 \backslash
 
 \backslash
-[6em]
+[8em]
 \end_layout
 
 \end_inset
@@ -632,7 +632,7 @@ Rapport d'ingénieur
 
  Filière F4 : Calcul Scientifique et Modélisation 
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -640,7 +640,7 @@ status collapsed
 \backslash
 
 \backslash
-[2em]
+[3em]
 \end_layout
 
 \end_inset
@@ -669,7 +669,7 @@ status collapsed
 
  
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -677,7 +677,7 @@ status collapsed
 \backslash
 
 \backslash
-[10em]
+[11em]
 \end_layout
 
 \end_inset
@@ -719,7 +719,7 @@ Durée : 120 heures
 
 \size normal
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -790,16 +790,81 @@ Résumé / Abstract
 Résumé
 \end_layout
 
+\begin_layout Standard
+Notre projet consiste à étudier la transformation d'un algorithme de partitionne
+ment d'observations, qui utilise directement la méthode des k-moyennes,
+ en un algorithme multi-niveau qui construit une succession de problèmes
+ comptant moins d'observations afin d'optimiser les temps de calculs et
+ de minimiser un critère.
+\end_layout
+
+\begin_layout Standard
+Dans cette optique, le nouvel algorithme se base sur un pré-traitement des
+ données en construisant les-sous problèmes les uns apres les autres grâce
+ à la fusion d'observations similaires suivant une distance prédéfinie.
+ Cette phase d'agrégation est suivie de l'application sur chaque sous-problème,
+ plus simple et doté du partionnement trouvé à la phase précédente, d'un
+ nouveau partionnement, donné par le raffinement du précédent par l'algorithme
+ des K-moyennes.
+\end_layout
+
+\begin_layout Standard
+Des études théoriques montrent que l'algorithme des k-moyennes est plus
+ rapide sur des problèmes avec peu d'observation, et nous chercherons dans
+ cette étude à confirmer cette théorie et tester l'efficacité de l'approche
+ multi-niveau qui en découle grâce à une bibliothèque écrite en C++ 11.
+\end_layout
+
+\begin_layout Standard
+À ce jour, les résultats de nos essais ont confirmé que
+\end_layout
+
 \begin_layout Subsection*
 Mots-clefs : 
+\end_layout
+
+\begin_layout Standard
+Partitionnement de graphe, k-moyennes, algorithme multi-niveau, C++ 11
 \end_layout
 
 \begin_layout Subsection*
 Abstract
 \end_layout
 
+\begin_layout Standard
+Our project consisted in studying the transformation of a data clustering
+ algorithm which made a direct use of the k-means method into a multi-level
+ algorithm which builds a series of smaller problems — with less data —
+ so that the computation time is optimized and the clustering criterion
+ minimized.
+\end_layout
+
+\begin_layout Standard
+In order to achieve this, the smaller problems are built by aggregating
+ the observations according to a predefined distance.
+ Once this aggregation phase reaches its end, we generate a preliminary
+ clustering thanks to any suitable clustering method before refining this
+ clustering thanks to the k-means algorithm applied to each of the previously
+ built problems, from the smaller to the original one.
+\end_layout
+
+\begin_layout Standard
+Theoretical studies shows that the k-means algorithm is faster on small
+ problems ; we sought in this project to confirm this statement and improve
+ the basic algorithm thanks to that multi-level approach thanks to a library
+ written in C++ 11.
+\end_layout
+
+\begin_layout Standard
+The performances shown as a result of our tests proved that 
+\end_layout
+
 \begin_layout Subsection*
 Keywords :
+\end_layout
+
+\begin_layout Standard
+Graph clustering, k-means, multi-level algorithme, C++ 11
 \end_layout
 
 \begin_layout Standard
@@ -824,7 +889,7 @@ LatexCommand tableofcontents
 
 \size normal
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -837,7 +902,7 @@ addcontentsline{toc}{section}{
 
 Table des matières
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -870,7 +935,7 @@ status collapsed
 
 \size normal
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -883,7 +948,7 @@ addcontentsline{toc}{section}{
 
 Table des figures
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -912,7 +977,7 @@ Glossaire
 
 \size normal
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -925,7 +990,7 @@ addcontentsline{toc}{section}{
 
 Glossaire
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -950,7 +1015,7 @@ status collapsed
 
 \size normal
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -963,7 +1028,7 @@ setcounter{page}{1}
 
  
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -985,7 +1050,7 @@ Introduction
 
 \size normal
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -998,7 +1063,7 @@ addcontentsline{toc}{section}{
 
 Introduction
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -1008,6 +1073,46 @@ status collapsed
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+Le partitionnement de graphe est un problème largement répandu qui s'insère
+ dans un vaste ensemble de domaines d'applications tels que la recherche
+ et les sciences via la biologie ou la sociologie mais aussi dans les nouvelles
+ technologies et la gestion à travers l'imagerie et la fouille de données.
+ Il est donc naturel qu'il s'agisse d'une question déjà bien étudiée dans
+ la littérature sous de nombreux aspects et dont les méthodes ou heuristiques
+ de résolution sont nombreuses et répandues.
+\end_layout
+
+\begin_layout Standard
+L'une de ces heuristiques, plus récemment découverte, exploite le lien entre
+ le problème de partitionnement de graphe et le problème de partitionnement
+ de données dit des k-moyennes en établissant des relations simples entre
+ les ensembles qui définissent chacun d'eux.
+ L'algorithme des k-moyennes étant plus efficace sur des données peu nombreuses,
+ la résolution du problème de partitionnement de graphes via les k-moyennes
+ débouche naturellement sur un algorithme multi-niveau visant à réduire
+ la taille des graphes traités via une agrégation des observations.
+ On optimise ainsi l'efficacité des k-moyennes tout en évitant le calcul
+ coûteux de vecteurs propres afférents aux méthodes spectrales plus courantes.
+\end_layout
+
+\begin_layout Standard
+Dans le cadre de ce projet, nous avions pour objectif d'étudier cette théorie
+ pour ensuite l'appliquer sur un ensemble d'exemples concrets qui constituaient
+ un panel de données de tests variées.
+ Au cours de ces tests, l'objectif était de faire varier les paramètres
+ du partitionnement tels que le nombre de points agrégés à chaque niveau,
+ et étudier l'efficacité subséquente de la méthode multi-niveau comparativement
+ à celle de l'algorithme des k-moyennes direct.
+\end_layout
+
+\begin_layout Standard
+Dans un premier temps, nous rappellerons ce que sont exactement les problèmes
+ et les algorithmes qui nous intéressent, puis nous pencherons sur les bibliothè
+ques C/C++ qui ont fait l'objet de notre travail avant de présenter enfin
+ les résultats de nos tests et les conclusions qui en découlent.
 \end_layout
 
 \begin_layout Standard
@@ -1038,10 +1143,14 @@ status collapsed
 \end_layout
 
 \begin_layout Section
-Définition du problème 
+Problèmes et algorithmes
 \end_layout
 
 \begin_layout Subsection
+Les problèmes
+\end_layout
+
+\begin_layout Subsubsection
 Le problème de partitionnement
 \end_layout
 
@@ -1152,7 +1261,7 @@ Dans la suite de ce document, les
  
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Subsubsection
 Problème des k-moyennes
 \end_layout
 
@@ -1248,22 +1357,6 @@ f^{kmeans}\left(C\right)=\begin{cases}
 0 & C=\emptyset
 \end{cases}
 \]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-newpage
-\end_layout
 
 \end_inset
 
@@ -1606,15 +1699,6 @@ KMEANS(K,m)^{*}= & {\displaystyle \sum_{i=1}^{n}}K_{ii}+{\displaystyle \min_{\Pi
 
 \end_layout
 
-\begin_layout Standard
-
-\size normal
-\begin_inset Newpage newpage
-\end_inset
-
-
-\end_layout
-
 \begin_layout Theorem
 \begin_inset Formula $\forall m\geq m^{'}$
 \end_inset
@@ -1754,7 +1838,7 @@ On en déduit que la valeur de l'objectif sur la partition
 .
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Subsubsection
 Partitionnement de graphes
 \end_layout
 
@@ -1966,7 +2050,7 @@ RASSOC\left(W,m\right)^{*}= & {\displaystyle \min_{\Pi=\left(C_{1},...,C_{m}\rig
 
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Subsubsection
 Lien entre le problème des k-moyennes et le partitionnement de graphes
 \end_layout
 
@@ -2004,15 +2088,15 @@ Résoudre le problème des k-moyennes avec un ensemble d'observation
 
 \end_layout
 
-\begin_layout Section
+\begin_layout Subsection
 Les algorithmes
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Subsubsection
 Définitions 
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Paragraph
 Voisins
 \end_layout
 
@@ -2054,7 +2138,7 @@ Soit
 .
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Paragraph
 \begin_inset Quotes eld
 \end_inset
 
@@ -2125,7 +2209,7 @@ N_{H}(X) & = & \{Y\in V'/\exists(x,y)\in X\times Y,\: x\in N_{G}(y)\}
 
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Subsubsection
 L'algorithme de réduction de graphe
 \end_layout
 
@@ -2529,7 +2613,7 @@ end{algorithm}
 
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Subsubsection
 L'algorithme spectral
 \end_layout
 
@@ -2561,7 +2645,7 @@ La réduction du graphe s'arrête lorsque celui-ci compte moins que
  de leur valeur propre.
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Subsubsection
 L'algorithme inverse de la réduction (par la méthode des K-moyennes)
 \end_layout
 
@@ -2874,7 +2958,7 @@ On pourrait également raffiner directement le partionnement initial sur
  des k-moyennes et réduirait donc l'efficacité de l'algorithme.
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Subsubsection
 Algorithme de principe
 \end_layout
 
@@ -3277,20 +3361,13 @@ end{algorithm}
 
 \end_layout
 
-\begin_layout Section
-Graclus : une première piste de travail
-\end_layout
-
 \begin_layout Standard
-Quoi être ? Puis :
-\end_layout
 
-\begin_layout Standard
-– Objectifs initiaux = compréhension, réécriture C++ 11, tests.
-\end_layout
+\size normal
+\begin_inset space \hspace*{\fill}
+\end_inset
 
-\begin_layout Standard
-– Trop le bordel donc on a laissé tomber.
+
 \end_layout
 
 \begin_layout Standard
@@ -3303,6 +3380,56 @@ Quoi être ? Puis :
 \end_layout
 
 \begin_layout Section
+Les bibliothèques de travail
+\end_layout
+
+\begin_layout Subsection
+Graclus : une première piste
+\end_layout
+
+\begin_layout Standard
+Graclus (contraction de « graph clustering ») est un logiciel qui, lorsque
+ l'on lui désigne un graphe non orienté, calcule l'objectif 
+\begin_inset Formula $RASSOC(W,m)^{*}$
+\end_inset
+
+ défini en section 1.1.3 grâce à l'usage de la version pondérée de l'objectif
+ des k-moyennes et les algorithmes présentés en 1.2.
+ 
+\end_layout
+
+\begin_layout Standard
+Ce programme implémente donc précisément les fonctionnalités qui nous intéressen
+t pour mener nos tests et s'est par conséquent présenté comme une première
+ piste naturelle pour effectuer notre étude pratique.
+ Comme nous souhaitions par ailleurs que cette étude fût réalisée grâce
+ à un programme à part entière faisant usage de Graclus, la première étape
+ qui se présentait à nous était bien entendu d'étudier et de s'imprégner
+ du code source de Graclus, disponible et écrit en C/C++.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Le contenu de Graclus
+\end_layout
+
+\begin_layout Standard
+Le code de Graclus nous a d'abord semblé volumineux et détaillé, aussi sa
+ prise en main a-t-elle nécessité un temps certain ; il n'aura toutefois
+ pas fallu beaucoup de temps pour remarquer l'existence de nombreuses structures
+ permettant d'aborder plus simplement chaque aspect du partionnement et
+ des k-moyennes.
+\end_layout
+
+\begin_layout Standard
+On notait en particulier la présence de
+\end_layout
+
+\begin_layout Subsubsection
+L'abandon de Graclus
+\end_layout
+
+\begin_layout Subsection
 Une nouvelle bibliothèque
 \end_layout
 
@@ -3312,7 +3439,7 @@ Bibliothèque alternative écrite par M.R.
 \end_layout
 
 \begin_layout Standard
-Mêmes objectifs que pour Graclus.
+Grosso-modo mêmes objectifs que pour Graclus.
 \end_layout
 
 \begin_layout Standard
@@ -3722,7 +3849,7 @@ raffinementKMeans(partitionInitiale , liste) ;
 
 \size normal
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -3735,7 +3862,7 @@ addcontentsline{toc}{section}{
 
 Bibliographie et Webographie
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -3794,7 +3921,7 @@ Annexes
 
 \size normal
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -3807,7 +3934,7 @@ addcontentsline{toc}{section}{
 
 Annexes
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -3818,7 +3945,7 @@ status collapsed
 
  
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -3840,7 +3967,7 @@ Table des Annexes
 
 \size normal
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -3853,7 +3980,7 @@ contentsline
 
  
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -3864,7 +3991,7 @@ status collapsed
 
 subsection
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -3875,7 +4002,7 @@ status collapsed
 
 
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -3899,7 +4026,7 @@ numberline{A}
 
 Premiers tests (invalides)
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -3910,7 +4037,7 @@ status collapsed
 
 
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -3921,7 +4048,7 @@ status collapsed
 
 III
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
