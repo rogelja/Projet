@@ -3395,17 +3395,20 @@ Graclus (contraction de « graph clustering ») est un logiciel qui, lorsque
 
  défini en section 1.1.3 grâce à l'usage de la version pondérée de l'objectif
  des k-moyennes et les algorithmes présentés en 1.2.
- 
+ Il utilise pour cela la bibliothèque Metis (Metis désigne en fait une série
+ de programmes destinés à remplir un ensemble de tâches précises parmi lesquelle
+s le partitionnement de graphe).
 \end_layout
 
 \begin_layout Standard
 Ce programme implémente donc précisément les fonctionnalités qui nous intéressen
 t pour mener nos tests et s'est par conséquent présenté comme une première
  piste naturelle pour effectuer notre étude pratique.
- Comme nous souhaitions par ailleurs que cette étude fût réalisée grâce
- à un programme à part entière faisant usage de Graclus, la première étape
- qui se présentait à nous était bien entendu d'étudier et de s'imprégner
- du code source de Graclus, disponible et écrit en C/C++.
+ Nos deux objectifs principaux étant, d'une part de réaliser cette étude
+ grâce à un programme à part entière faisant usage de Graclus, et d'autre
+ part de réécrire cette bibliothèque en C++11, la première étape qui se
+ présentait à nous était bien entendu d'étudier et de s'imprégner du code
+ source de Graclus, disponible et écrit en C/C++.
  
 \end_layout
 
@@ -3422,11 +3425,89 @@ Le code de Graclus nous a d'abord semblé volumineux et détaillé, aussi sa
 \end_layout
 
 \begin_layout Standard
-On notait en particulier la présence de
+On notait en particulier la présence, dans un fichier 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\backslash
+sc struct.h}
+\end_layout
+
+\end_inset
+
+, d'une structure 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\backslash
+sc GraphType}
+\end_layout
+
+\end_inset
+
+ regroupant les informations attentant au graphe initial tels que la donnée
+ des sommets, des arêtes ou des pondérations dans des vecteurs, chacun de
+ ces concepts étant à son tour matérialisé par une ou plusieurs structures
+ tierces (
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\backslash
+sc EDegreeType et VDegreeType}
+\end_layout
+
+\end_inset
+
+ pour les sommets, par exemple).
+\end_layout
+
+\begin_layout Standard
+Les traitements effectués sur les donnes ainsi stockées étaient à leur tour
+ recouverts par un ensemble de fonctions aux buts précis.
+ La première était bien entendu la fonction de lecture de graphe, qui comprenait
+ un paramètre 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\backslash
+sc wgtflag}
+\end_layout
+
+\end_inset
+
+ permettant de connaître si le fichier lu comprend des pondérations sur
+ les arêtes et/ou les sommets.
+ D'autres fonctions prenaient ensuite la relève pour effectuer le partitionnemen
+t, calculer différents objectifs ou même l'équilibre d'une partition en
+ fonction du poids des sommets le cas échéant.
 \end_layout
 
 \begin_layout Subsubsection
 L'abandon de Graclus
+\end_layout
+
+\begin_layout Standard
+Néanmoins en poursuivant l'étude il est apparu que Graclus et Metis consitutaien
+t un code fastidieux à manipuler et souvent peu clair ; sa lecture n'était
+ d'ailleurs pas facilitée par le mélange de C et de C++ qui justifiait notre
+ projet de le réécrire en C++11.
+\end_layout
+
+\begin_layout Standard
+Pour ces raisons, il a été jugé plus opportun et plus rapide de se détourner
+ de Graclus pour adopter une autre bibliothèque.
 \end_layout
 
 \begin_layout Subsection
@@ -3434,29 +3515,111 @@ Une nouvelle bibliothèque
 \end_layout
 
 \begin_layout Standard
-Bibliothèque alternative écrite par M.R.
- et ses collaborateurs.
+Suite à l'abandon de Graclus, notre travail a été orienté vers une autre
+ bibliothèque conçue par M.
+ Ruiz et ses collaborateurs nommée 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\backslash
+sc Clusteristator}
 \end_layout
 
-\begin_layout Standard
-Grosso-modo mêmes objectifs que pour Graclus.
-\end_layout
-
-\begin_layout Standard
-
-\size normal
-\begin_inset Newpage newpage
 \end_inset
 
-
+.
+ Écrite en C++11, cette bibliothèque comprend des classes pour stocker aussi
+ bien les instances sur lesquelles on travaille que les partitions données
+ sur elle ou les contraintes qui les définissent mais n'implémente pas l'algorit
+hme multi-niveau.
 \end_layout
 
-\begin_layout Section
-Les tests
+\begin_layout Standard
+Une étape additionnelle par rapport à ce qui était initialement prévu consistait
+ donc à programmer cet algorithme et le valider via divers tests avant de
+ pouvoir procéder à l'étude à proprement parler.
 \end_layout
 
-\begin_layout Subsection
-Présentation des instances
+\begin_layout Subsubsection
+L'implémentation du multi-niveau
+\end_layout
+
+\begin_layout Standard
+Le détail de l'implémentation est disponible dans l'annexe A.
+\end_layout
+
+\begin_layout Paragraph
+L'agrégation :
+\end_layout
+
+\begin_layout Standard
+L'algorithme gérant la phase d'agrégation a été implémenté en tant que méthode
+ de la classe 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\backslash
+sc MultiLevelAlgo}
+\end_layout
+
+\end_inset
+
+ à partir de laquelle il est possible d'accéder à toutes les données nécessaires.
+\end_layout
+
+\begin_layout Standard
+La méthode, 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\backslash
+sc buildMultiLevelData}
+\end_layout
+
+\end_inset
+
+, ne prenait à l'origine en paramètre que le nombre d'observations maximal
+ du problème le plus agrégé et se poursuivait tant que la partition courante
+ comptait davantage d'observations que ce seuil.
+\end_layout
+
+\begin_layout Standard
+À un niveau d'agrégation donné, nous parcourons tous les nœuds du problème
+ dans un ordre aléatoire et calculons pour chacun d'entre eux la distance
+ qui le sépare de chacun des autres afin de l'agréger avec le plus proche.
+ Les nœuds ainsi traités sont ensuite retirés de la liste des nœuds à traiter
+ et le niveau d'agrégation courant est complètement défini lorsque la liste
+ est vide.
+\end_layout
+
+\begin_layout Standard
+Au sein du code, les supernœuds et les classes sont traités de la même façon.
+ L'agrégation et le partionnement se font donc par le même mécanisme ; ici
+ via l'usage de contraintes indiquant que deux nœuds doivent ou non être
+ dans une même classe — ou un même supernœud.
+\end_layout
+
+\begin_layout Paragraph
+Le raffinement :
+\end_layout
+
+\begin_layout Subsubsection
+Des tests préliminaires
+\end_layout
+
+\begin_layout Standard
+/!
+\backslash
+ Changer le texte
 \end_layout
 
 \begin_layout Standard
@@ -3517,8 +3680,27 @@ Extrait d'un fichier data
 
 \end_layout
 
+\begin_layout Section
+Les tests
+\end_layout
+
+\begin_layout Standard
+
+\size normal
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 Premiers tests et analyses
+\end_layout
+
+\begin_layout Standard
+/!
+\backslash
+ Changer le texte
 \end_layout
 
 \begin_layout Subsubsection
@@ -3845,6 +4027,19 @@ raffinementKMeans(partitionInitiale , liste) ;
 
 \end_layout
 
+\begin_layout Section
+Conclusion
+\end_layout
+
+\begin_layout Standard
+
+\size normal
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 
 \size normal
@@ -4024,7 +4219,7 @@ numberline{A}
 
 \end_inset
 
-Premiers tests (invalides)
+Détails de l'implémentation
 \begin_inset ERT
 status open
 
@@ -4047,6 +4242,103 @@ status open
 \end_inset
 
 III
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\size normal
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+contentsline
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+subsection
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+numberline{B}
+\end_layout
+
+\end_inset
+
+Premiers tests (invalides)
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+à régler
 \begin_inset ERT
 status open
 
@@ -4088,7 +4380,48 @@ status open
 \end_layout
 
 \begin_layout Section*
-Premiers tests (invalides)
+A 
+\begin_inset space \space{}
+\end_inset
+
+ Détails de l'implémentation
+\end_layout
+
+\begin_layout Subsection*
+A.1 
+\begin_inset space \space{}
+\end_inset
+
+ La phase d'agrégation
+\end_layout
+
+\begin_layout Standard
+buildMultiLevelData() : codé épuré
+\end_layout
+
+\begin_layout Subsection*
+A.2 
+\begin_inset space \space{}
+\end_inset
+
+ La phase de raffinement
+\end_layout
+
+\begin_layout Standard
+refine() : codé épuré
+\end_layout
+
+\begin_layout Section*
+
+\size normal
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+B - Premiers tests (invalides)
 \end_layout
 
 \begin_layout Subsection*
