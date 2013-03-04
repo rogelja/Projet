@@ -816,7 +816,7 @@ Des études théoriques montrent que l'algorithme des k-moyennes est plus
 \end_layout
 
 \begin_layout Standard
-À ce jour, les résultats de nos essais ont confirmé que
+Les résultats de nos essais ont confirmé que
 \end_layout
 
 \begin_layout Subsection*
@@ -3565,7 +3565,7 @@ status open
 
 {
 \backslash
-sc MultiLevelAlgo}
+sc MultiLevelAlgo()}
 \end_layout
 
 \end_inset
@@ -3612,53 +3612,84 @@ Au sein du code, les supernœuds et les classes sont traités de la même façon
 Le raffinement :
 \end_layout
 
+\begin_layout Standard
+La méthode 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\backslash
+sc refine()}
+\end_layout
+
+\end_inset
+
+, dans sa première version se chargeait d'effectuer le partitionnement initial
+ sur le graphe le plus agrégé ; celui-là était aléatoire.
+\end_layout
+
+\begin_layout Standard
+L'algorithme en soi en étest assez simple : l'algorithme des k-moyennes
+ est appliqué sur le niveau courant afin d'obtenir un partitionnement satisafais
+ant pour le graphe correspondant, puis l'on passe au niveau suivant grâce
+ au mécanisme des contraintes mentionné plus haut.
+ Ces étapes sont itérées jusqu'au traitement du graphe d'origine.
+\end_layout
+
+\begin_layout Standard
+Cette méthode ajoute une mesure du temps passé sur les itérations des k-moyennes
+ dans l'optique dévaluer l'efficacité relative de la méthode multi-niveaux.
+\end_layout
+
 \begin_layout Subsubsection
 Des tests préliminaires
 \end_layout
 
 \begin_layout Standard
-/!
-\backslash
- Changer le texte
-\end_layout
 
-\begin_layout Standard
-Pour effectuer les différents tests pour le programme, nous avons une selection
- de quatorze fichiers data — des documents texte — qui recencent les données
- en deux parties : la premiere ligne nous donne le nombre de points et le
- nombre de coordonnées qui les caractérisent et s'ensuit l'énumération des
- coordonnées pour chaque point.
-\end_layout
-
-\begin_layout Standard
-Ce qui est intéressant dans ce set de données, c'est qu'elles sont liées
- à des phenomènes naturels tels que la biologie, et que de plus le nombre
- d'observations est très varié.
- Ainsi la robustesse et l'efficacité des algorithmes sont testées, ce qui
- nous permet d'être plus confiant dans les résultats que l'on obtient.
-\end_layout
-
-\begin_layout Standard
-\align center
-\begin_inset Float figure
-wide false
-sideways false
+\size normal
+\begin_inset Wrap figure
+lines 16
+placement r
+overhang 0in
+width "40text%"
 status open
 
 \begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename Img/données.png
-	lyxscale 30
-	width 30text%
+
+\size normal
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
 
 \end_inset
 
+ 
+\begin_inset VSpace -1.5cm
+\end_inset
 
+ 
+\begin_inset Graphics
+	filename Img/données.png
+	width 5cm
+
+\end_inset
+
+ 
 \begin_inset Caption
 
 \begin_layout Plain Layout
-Extrait d'un fichier data
+
+\size normal
+Extrait du fichier Fisher150.dat
 \end_layout
 
 \end_inset
@@ -3666,9 +3697,87 @@ Extrait d'un fichier data
 
 \end_layout
 
+\begin_layout Plain Layout
+
+\size normal
+\begin_inset CommandInset label
+LatexCommand label
+name "luminancemetre"
+
+\end_inset
+
+ 
+\end_layout
+
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+Ce codage préliminaire effectué, il était bien entendu nécessaire de le
+ mettre à l'épreuve.
+ Nous disposions pour procéder à quelques tets d'un ensemble de données
+ fournies par M.
+ Ruiz sous forme de fichiers de données brutes donnée par la figure ci-contre.
+\end_layout
+
+\begin_layout Standard
+Comme on peut le voir, la première ligne contient deux valeurs : la première
+ est le nombre de données pour le problème correspondant à ce fichier ;
+ la seconde est la dimension de l'espace des données — plus concrètement,
+ il s'agit du nombre de caractéristiques mesurées pour chaque donnée.
+ Dans cet exemple nous voyons donc les dix-neuf premières données d'un ensemble
+ de cent cinquante données quadridimensionnelles.
+\end_layout
+
+\begin_layout Standard
+Nous disposons au total de quatorze échantillons de tels fichiers pour des
+ ensembles comptant de cent cinquante à vingt mille données évoluant dans
+ des espaces dont la dimension varie entre 4 et 60, ce qui mène donc à des
+ tests sinon exhasustifs, au moins très variés.
+\end_layout
+
+\begin_layout Standard
+Au cours de ces premières tentatives, nous avons de plus fait varier le
+ nombre maximal de points que nous souhaitions atteindre dans le graphe
+ le plus agrégé et profiter de l'éventuelle justesse des résultats pour
+ confirmer ou infirmer les résultats théoriques concernant l'approche multi-nive
+aux.
+\end_layout
+
+\begin_layout Standard
+Les résultats de ces premiers tests peuvent être trompeurs — ils figurent
+ en annexes.
+ De fait, leur lecture peut sembler satisfaisante car leur évolution, au
+ niveau temps de calcul notamment, est conforme à ce que nous indique la
+ théorie.
+\end_layout
+
+\begin_layout Standard
+Néanmoins, il faut également s'intéresser aux résultats intermédiaires de
+ l'algorithme pour valider son fonctionnement ; c'est pécisément cela —
+ et plus particulièrement la variation de la valeur de l'objectif au fil
+ des niveaux raffiné — qui, dans un premier temps, a révélé les premiers
+ bugs de notre code.
+\end_layout
+
+\begin_layout Standard
+Par ailleurs, chaque test correspond à un ensemble de paramètres particulier,
+ ce qui implique que chacun de ces ensembles de paramètres n'a été testé
+ qu'une fois.
+ L'influence de l'initialisation aléatoire du partitionnement n'a donc aucunemen
+t été prise en compte, et l'ignorance subséquente s'étend aux comparaisons
+ entre les différents tests sur une même instance qui ne font pas l'objet
+ de la même initialisation.
+ Une étude trop légère de ces sorties mènerait donc à la comparaison impertinent
+e de grandeurs indépendantes.
+\end_layout
+
+\begin_layout Standard
+L'affirmation de la conformité entre les observations ainsi faites et la
+ théorie doit donc être prise avec précautions ; pour infirmer ou confirmer
+ cette première impression, il est donc nécessaire de renforcer les tests.
 \end_layout
 
 \begin_layout Standard
@@ -3685,82 +3794,27 @@ Les tests
 \end_layout
 
 \begin_layout Standard
-
-\size normal
-\begin_inset Newpage newpage
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-Premiers tests et analyses
+/!
+\backslash
+ Texte non à jour à partir d'ici /!
+\backslash
+ 
 \end_layout
 
 \begin_layout Standard
 /!
 \backslash
- Changer le texte
-\end_layout
-
-\begin_layout Subsubsection
-Une première série de tests
-\end_layout
-
-\begin_layout Standard
-De manière générale, on remarque que le nombre d'itérations à chaque niveau
- est inférieur au nombre d'itérations si on applique directement les K-moyennes.
- C'est un résultat que l'on cherchait à obtenir pour valider la méthode
- du multi-level.
+ Texte non à jour /!
+\backslash
  
 \end_layout
 
 \begin_layout Standard
-Cependant si on se refère au nombre total d'itérations on a une nette augmentati
-on dès lors qu'on utilise l'algorithme multi-level; il serait donc peut-être
- intéressant de chercher une meilleure méthode qui diminuerait cet écart,
- même s'il n'a une influence que sur le temps de calcul et que pour le moment
- ce n'est pas notre objectif premier.
-\end_layout
-
-\begin_layout Standard
-Si maintenant on regarde les résultats que l'on obtient grâce au muti-niveau
- et que l'on compare ceux-ci aux resultats directement donnés par l'application
- des K-moyennes, on remarque très simplement que les premiers résultats
- sont inférieurs aux seconds.
- C'est un résultat intéressant que l'on ne cherchait pas forcément à avoir
- mais dans certains cas on améliore grandement la fonction objectif (notamment
- pour des problèmes avec un nombre faible de points.).
-\end_layout
-
-\begin_layout Standard
-On remarque aussi que plus on a de classes, plus le résultat est faible
- mais cela semble logique du fait que la fonction objectif est la mesure
- de la distance des points par rapport aux centroïdes auxquels ils sont
- affectés, donc plus il y a de classes plus le point est proche de son centroïde
- donc plus les distances entre les points et leurs centroïdes sont faibles.
-\end_layout
-
-\begin_layout Standard
-Notre première analyse est certes en accord avec ce que l'on cherche mais
- qu'il faut néanmoins grandement mitiger car somme toute peu pertinents.
- En effet on a basé nos tests sur une partition initiale aléatoire qui est
- donc différente entre tous les lancements des partitionnements, notre analyse
- n'est donc pas concluante dès lors que l'on compare les lignes des tableaux
- précédents entres eux.
- Par conséquent, la prochaine étape est de réaliser des tests comparables
- en enregistrant le partitionnement initial et en appliquant le même pour
- tous les lancements des tests au sein d'un même groupe comportant le même
- nombre de classes.
-\end_layout
-
-\begin_layout Standard
-
-\size normal
-\begin_inset Newpage newpage
-\end_inset
-
-
+/!
+\backslash
+ Texte non à jour /!
+\backslash
+ 
 \end_layout
 
 \begin_layout Subsection
@@ -3776,7 +3830,7 @@ Ansi qu'on l'a mentionné plus tôt, nos premiers tests se fondaient sur des
  générations aléatoires pour le tout premier partitionnement requis par
  l'algortihme des k-moyennes (Fig.
  3) ; ce partitionnement était donc distinct entre deux lancement du programme
- et les comparaisons qui s'ensuivaient étaient donc bancales.
+ et les comparaisons qui s'ensuivaient étaient conséquemment bancales.
 \end_layout
 
 \begin_layout Standard
@@ -4396,7 +4450,7 @@ A.1
 \end_layout
 
 \begin_layout Standard
-buildMultiLevelData() : codé épuré
+buildMultiLevelData() : code épuré
 \end_layout
 
 \begin_layout Subsection*
@@ -4408,7 +4462,7 @@ A.2
 \end_layout
 
 \begin_layout Standard
-refine() : codé épuré
+refine() : code épuré
 \end_layout
 
 \begin_layout Section*
@@ -4421,7 +4475,11 @@ refine() : codé épuré
 \end_layout
 
 \begin_layout Section*
-B - Premiers tests (invalides)
+B 
+\begin_inset space \space{}
+\end_inset
+
+ Premiers tests (invalides)
 \end_layout
 
 \begin_layout Subsection*
